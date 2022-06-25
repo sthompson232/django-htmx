@@ -13,13 +13,14 @@ def index(request):
   return render(request, 'index.html', context)
 
 
-def create_book(request, pk):
+def author_detail(request, pk):
   author = Author.objects.get(pk=pk)
   books = Book.objects.filter(author=author)
   form = BookForm(request.POST or None)
 
   if request.POST:
     if form.is_valid():
+      print('form is valid')
       book = form.save(commit=False)
       book.author = author
       book.save()
@@ -32,9 +33,17 @@ def create_book(request, pk):
     'author': author,
     'books': books
   }
-  return render(request, 'create_book.html', context)
+  return render(request, 'author_detail.html', context)
 
 
+def detail_book(request, pk):
+  book = Book.objects.get(pk=pk)
+  context = {
+    'book': book
+  }
+  return render(request, 'partials/book_detail.html', context)
+
+  
 def create_book_form(request):
   context = {
     'form': BookForm()
@@ -56,14 +65,6 @@ def update_book_form(request, pk):
     'book': book
   }
   return render(request, 'partials/book_form.html', context)
-
-
-def detail_book(request, pk):
-  book = Book.objects.get(pk=pk)
-  context = {
-    'book': book
-  }
-  return render(request, 'partials/book_detail.html', context)
 
 
 def delete_book(request, pk):

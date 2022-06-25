@@ -3,7 +3,7 @@
 {% block content %}
 
 {% for author in authors %}
-  <a href="{% url 'create-book' author.pk %}">
+  <a href="{% url 'author-detail' author.pk %}">
     <h1>{{ author.name }}</h1>
   </a>
 {% endfor %}
