@@ -20,7 +20,6 @@ def author_detail(request, pk):
 
   if request.POST:
     if form.is_valid():
-      print('form is valid')
       book = form.save(commit=False)
       book.author = author
       book.save()
